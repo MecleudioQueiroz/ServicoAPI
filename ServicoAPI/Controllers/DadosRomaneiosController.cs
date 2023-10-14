@@ -17,9 +17,9 @@ namespace ServicoAPI.Controllers
         private Contexto db = new Contexto();
 
         // GET: api/DadosRomaneios
-        public IQueryable<DadosRomaneio> GetDadosRomaneio()
+        public IEnumerable<DadosRomaneio> GetDadosRomaneio()
         {
-            return db.DadosRomaneio;
+            return db.DadosRomaneio.ToList();
         }
 
         // GET: api/DadosRomaneios/5
