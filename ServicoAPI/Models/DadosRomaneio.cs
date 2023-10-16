@@ -12,6 +12,7 @@ namespace ServicoAPI.Models
         public int Id { get; set; }
         public int Arvore { get; set; }
         public int Picada { get; set; }
+        public int Upa { get; set; }
         public string Nome { get; set; }
         public double Cap { get; set; }
         public double Dap { get; set; }
