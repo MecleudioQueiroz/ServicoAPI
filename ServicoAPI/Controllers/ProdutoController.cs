@@ -12,44 +12,53 @@ using ServicoAPI.Models;
 
 namespace ServicoAPI.Controllers
 {
-    public class DadosRomaneiosController : ApiController
+    [Route("api/produto")]
+    public class ProdutoController : ApiController
     {
         private Contexto db = new Contexto();
 
-        // GET: api/DadosRomaneio
-        public IEnumerable<DadosRomaneio> GetDadosRomaneio()
+        // GET: api/Produto
+        public IQueryable<produto> Getproduto()
         {
-            return db.DadosRomaneio.ToList();
+            try
+            {
+                return db.produto;
+            }
+            catch (Exception erro)
+            {
+
+                throw;
+            }
         }
 
-        // GET: api/DadosRomaneios/5
-        [ResponseType(typeof(DadosRomaneio))]
-        public IHttpActionResult GetDadosRomaneio(int id)
+        // GET: api/Produto/5
+        [ResponseType(typeof(produto))]
+        public IHttpActionResult GetProdutos(int id)
         {
-            DadosRomaneio dadosRomaneio = db.DadosRomaneio.Find(id);
-            if (dadosRomaneio == null)
+            produto produtos = db.produto.Find(id);
+            if (produtos == null)
             {
                 return NotFound();
             }
 
-            return Ok(dadosRomaneio);
+            return Ok(produtos);
         }
 
-        // PUT: api/DadosRomaneios/5
+        // PUT: api/Produto/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutDadosRomaneio(int id, DadosRomaneio dadosRomaneio)
+        public IHttpActionResult PutProdutos(int id, produto produtos)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != dadosRomaneio.Id)
+            if (id != produtos.ProdutoId)
             {
                 return BadRequest();
             }
 
-            db.Entry(dadosRomaneio).State = EntityState.Modified;
+            db.Entry(produtos).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +66,7 @@ namespace ServicoAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!DadosRomaneioExists(id))
+                if (!ProdutosExists(id))
                 {
                     return NotFound();
                 }
@@ -70,35 +79,35 @@ namespace ServicoAPI.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/DadosRomaneios
-        [ResponseType(typeof(DadosRomaneio))]
-        public IHttpActionResult PostDadosRomaneio(DadosRomaneio dadosRomaneio)
+        // POST: api/Produto
+        [ResponseType(typeof(produto))]
+        public IHttpActionResult PostProdutos(produto produtos)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.DadosRomaneio.Add(dadosRomaneio);
+            db.produto.Add(produtos);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = dadosRomaneio.Id }, dadosRomaneio);
+            return CreatedAtRoute("DefaultApi", new { id = produtos.ProdutoId }, produtos);
         }
 
-        // DELETE: api/DadosRomaneios/5
-        [ResponseType(typeof(DadosRomaneio))]
-        public IHttpActionResult DeleteDadosRomaneio(int id)
+        // DELETE: api/Produto/5
+        [ResponseType(typeof(produto))]
+        public IHttpActionResult DeleteProdutos(int id)
         {
-            DadosRomaneio dadosRomaneio = db.DadosRomaneio.Find(id);
-            if (dadosRomaneio == null)
+            produto produtos = db.produto.Find(id);
+            if (produtos == null)
             {
                 return NotFound();
             }
 
-            db.DadosRomaneio.Remove(dadosRomaneio);
+            db.produto.Remove(produtos);
             db.SaveChanges();
 
-            return Ok(dadosRomaneio);
+            return Ok(produtos);
         }
 
         protected override void Dispose(bool disposing)
@@ -110,9 +119,9 @@ namespace ServicoAPI.Controllers
             base.Dispose(disposing);
         }
 
-        private bool DadosRomaneioExists(int id)
+        private bool ProdutosExists(int id)
         {
-            return db.DadosRomaneio.Count(e => e.Id == id) > 0;
+            return db.produto.Count(e => e.ProdutoId == id) > 0;
         }
     }
 }
